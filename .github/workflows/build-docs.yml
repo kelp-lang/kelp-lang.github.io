@@ -22,7 +22,11 @@ jobs:
           path: build
         
       - name: Move to kelp mdbook
-        run: cd kelp/kelp
+        run: |
+          ls -lAh
+          cd kelp/
+          ls -lAh
+          cd kelp/
 
       - name: Build kelp mdBook
         uses: peaceiris/actions-mdbook@v1.1.13
@@ -34,6 +38,7 @@ jobs:
       - name: Move to agar mdbook
         run: |
           cd ..
+          ls -lAh
           cd agar/
       
       - name: Build kelp mdBook
