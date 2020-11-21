@@ -13,43 +13,33 @@ jobs:
           mkdir kelp
           mkdir agar
           mkdir build
-          cd build
           
       - name: Get the docs repo
         uses: actions/checkout@v2
         with: 
           repository: kelp-lang/docs
           path: build
-        
-      - name: Move to kelp mdbook
-        run: |
-          ls -lAh
-          cd kelp/
 
       - name: Build kelp mdBook
-        uses: peaceiris/actions-mdbook@v1.1.13
+        uses: XAMPPRocky/deploy-mdbook@v1.1.0
+        with:
+          workspace: build/kelp/
         
       - name: Copy book to root
-        run: |
-          cp -r book/* $GITHUB_WORKSPACE/kelp/*
+        run: cp -r build/kelp/book/* $GITHUB_WORKSPACE/kelp/*
       
-      - name: Move to agar mdbook
-        run: |
-          cd ..
-          ls -lAh
-          cd agar/
       
       - name: Build kelp mdBook
-        uses: peaceiris/actions-mdbook@v1.1.13
+        uses: XAMPPRocky/deploy-mdbook@v1.1.0
+        with:
+          workspace: build/agar/
 
       - name: Copy book to root
         run: |
-          cp -r book/* $GIHUB_WORKSPACE/agar/*
+          cp -r build/agar/book/* $GIHUB_WORKSPACE/agar/*
       
       - name: Clean up and move to root again
-        run: |
-          cd $GITHUB_WORKSPACE
-          rm -rf build
+        run: rm -rf build
       
       - name: Build github pages
         uses: crazy-max/ghaction-github-pages@v2.2.0
