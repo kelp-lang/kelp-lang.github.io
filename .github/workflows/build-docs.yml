@@ -1,0 +1,50 @@
+name: Build docs
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+jobs:
+  build-kelp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare dirs
+        run: |
+          mkdir kelp
+          mkdir agar
+          mkdir build
+          cd build
+          
+      - name: Get the docs repo
+        uses: actions/checkout@v2
+        with: 
+          repository: kelp-lang/docs
+          path: build
+        
+      - name: Move to kelp mdbook
+        run: cd kelp
+
+      - name: Build kelp mdBook
+        uses: peaceiris/actions-mdbook@v1.1.13
+        with:
+          publish-dir: ../../kelp/
+      
+      - name: Move to agar mdbook
+        run: |
+          cd ..
+          cd agar
+      
+      - name: Build kelp mdBook
+        uses: peaceiris/actions-mdbook@v1.1.13
+        with:
+          publish-dir: ../../agar/
+      
+      - name: Clean up and move to root again
+        run: |
+          cd ../../
+          rm -rf build
+      
+      - name: Build github pages
+        uses: crazy-max/ghaction-github-pages@v2.2.0
+        with:
+          build-dir: docs
