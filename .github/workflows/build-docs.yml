@@ -22,26 +22,30 @@ jobs:
           path: build
         
       - name: Move to kelp mdbook
-        run: cd kelp
+        run: cd kelp/kelp
 
       - name: Build kelp mdBook
         uses: peaceiris/actions-mdbook@v1.1.13
-        with:
-          publish-dir: ../../kelp/
+        
+      - name: Copy book to root
+        run: |
+          cp -r book/* $GITHUB_WORKSPACE/kelp/*
       
       - name: Move to agar mdbook
         run: |
           cd ..
-          cd agar
+          cd agar/
       
       - name: Build kelp mdBook
         uses: peaceiris/actions-mdbook@v1.1.13
-        with:
-          publish-dir: ../../agar/
+
+      - name: Copy book to root
+        run: |
+          cp -r book/* $GIHUB_WORKSPACE/agar/*
       
       - name: Clean up and move to root again
         run: |
-          cd ../../
+          cd $GITHUB_WORKSPACE
           rm -rf build
       
       - name: Build github pages
