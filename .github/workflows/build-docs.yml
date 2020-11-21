@@ -24,6 +24,7 @@ jobs:
         uses: XAMPPRocky/deploy-mdbook@v1.1.0
         with:
           workspace: build/kelp/
+          build_only: true
         
       - name: Copy book to root
         run: cp -r build/kelp/book/* $GITHUB_WORKSPACE/kelp/*
@@ -33,6 +34,7 @@ jobs:
         uses: XAMPPRocky/deploy-mdbook@v1.1.0
         with:
           workspace: build/agar/
+          build_only: true
 
       - name: Copy book to root
         run: |
